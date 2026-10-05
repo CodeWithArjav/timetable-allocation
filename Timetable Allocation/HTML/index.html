@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Timetable Allocation System</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-body">
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <div class="auth-container">
+      <div class="auth-left">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+          "
+        >
+          <div class="brand-logo" style="background: rgba(255, 255, 255, 0.2)">
+            T
+          </div>
+          <div>
+            <h2 style="font-size: 17px">Timetable Allocation System</h2>
+            <p
+              style="
+                font-size: 11.5px;
+                opacity: 0.8;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+              "
+            >
+              College Faculty
+            </p>
+          </div>
+        </div>
+
+        <h1>Smart Scheduling for<br />Modern Classrooms 🎓</h1>
+        <p>
+          Manage class schedules by department, faculty, and classroom. Let our
+          AI assistant find available rooms and detect conflicts instantly.
+        </p>
+        <ul class="auth-features">
+          <li>
+            <span class="feat-icon">🗓️</span> View, add & edit schedules with
+            ease
+          </li>
+          <li>
+            <span class="feat-icon">🤖</span> AI chat for classroom availability
+          </li>
+          <li>
+            <span class="feat-icon">⚡</span> Real-time conflict detection
+          </li>
+          <li>
+            <span class="feat-icon">🔐</span> Secure IT-support-approved access
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-right">
+        <h2 class="auth-title">Welcome Back 👋</h2>
+        <p class="auth-sub">Login to access your timetable dashboard</p>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input
+              type="email"
+              id="loginEmail"
+              class="form-control"
+              placeholder="you@college.edu"
+              autocomplete="email"
+            />
+            <div class="field-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="password-wrap">
+              <input
+                type="password"
+                id="loginPassword"
+                class="form-control"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                title="Show password"
+              >
+                👁️
+              </button>
+            </div>
+            <div class="field-error"></div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">
+            🔐 Login
+          </button>
+        </form>
+
+        <button id="demoLogin" class="btn btn-ghost btn-block mt-2">
+          ⚡ Demo (Admin)
+        </button>
+
+        <button id="demoITLogin" class="btn btn-ghost btn-block mt-2">
+          🛠️ Demo (IT-Support)
+        </button>
+
+        <div class="auth-switch">
+          Don't have an account? <a href="signup.html">Request Sign Up</a>
+        </div>
+
+        <div class="auth-footer-msg">
+          New accounts require <b>IT Support Team</b> approval.<br />
+          Demo credentials — Admin: <b>admin@college.edu</b> / <b>admin123</b
+          ><br />
+          IT Support: <b>support@college.edu</b> / <b>support123</b>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

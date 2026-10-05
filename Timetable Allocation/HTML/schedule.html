@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule | College Timetable Allocation System</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">T</div>
+        <div class="brand-text">
+          <h2>Timetable System</h2>
+          <p>College Faculty</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"
+          ><span class="icon">📊</span> Dashboard</a
+        >
+        <a href="schedule.html" class="nav-item active"
+          ><span class="icon">🗓️</span> Schedule</a
+        >
+        <a href="chat.html" class="nav-item"
+          ><span class="icon">🤖</span> AI Assistant</a
+        >
+        <a href="it-support.html" class="nav-item"
+          ><span class="icon">🛡️</span> IT Support</a
+        >
+        <div class="nav-label mt-2">Account</div>
+        <a href="index.html" class="nav-item" onclick="logoutUser()"
+          ><span class="icon">🚪</span> Logout</a
+        >
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini">
+          <div class="avatar user-avatar">U</div>
+          <div style="flex: 1">
+            <div class="u-name" style="font-size: 12.5px; font-weight: 600">
+              User
+            </div>
+            <div
+              class="u-role"
+              style="font-size: 10.5px; color: var(--text-muted)"
+            >
+              ROLE
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main" id="scheduleContent">
+      <header class="topbar">
+        <button class="menu-toggle">☰</button>
+        <div class="topbar-title">
+          <h1>Schedule Management</h1>
+          <p>
+            Add, edit, and view class schedules by department, faculty, or
+            classroom
+          </p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn theme-toggle" title="Toggle theme">🌙</button>
+          <button class="icon-btn logout-btn" title="Logout">🚪</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="grid-4 stagger">
+          <div class="stat-card stat-purple">
+            <div class="stat-label">Total Schedules</div>
+            <div class="stat-value" id="statTotal">0</div>
+          </div>
+
+          <div class="stat-card stat-green">
+            <div class="stat-label">Departments</div>
+            <div class="stat-value" id="statDept">0</div>
+          </div>
+
+          <div class="stat-card stat-blue">
+            <div class="stat-label">Rooms Used</div>
+            <div class="stat-value" id="statRooms">0</div>
+          </div>
+
+          <div class="stat-card stat-red">
+            <div class="stat-label">Conflicts</div>
+            <div class="stat-value" id="statConflicts">0</div>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="filter-bar">
+            <div class="form-group">
+              <label for="filterDept">Department</label>
+              <select
+                id="filterDept"
+                class="form-control"
+                title="Filter by department"
+              >
+                <option value="">All Departments</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filterFaculty">Faculty</label>
+              <select
+                id="filterFaculty"
+                class="form-control"
+                title="Filter by faculty"
+              >
+                <option value="">All Faculty</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filterRoom">Classroom</label>
+              <select
+                id="filterRoom"
+                class="form-control"
+                title="Filter by classroom"
+              >
+                <option value="">All Rooms</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="flex: 1.5">
+              <label>Search</label>
+              <input
+                type="text"
+                id="scheduleSearch"
+                class="form-control"
+                placeholder="🔍 Search course, faculty, division..."
+              />
+            </div>
+
+            <div
+              class="form-group"
+              style="display: flex; gap: 10px; align-items: flex-end"
+            >
+              <button
+                id="btnScanRooms"
+                type="button"
+                data-action="scan"
+                class="btn btn-outline"
+                style="
+                  border-color: var(--accent-light);
+                  color: var(--accent-light);
+                "
+              >
+                📡 Scan Empty Classrooms
+              </button>
+              <button
+                id="btnAddSchedule"
+                type="button"
+                data-action="add"
+                class="btn btn-primary"
+              >
+                ➕ Add Schedule
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 6px">
+            <button
+              id="viewTable"
+              type="button"
+              data-action="view-table"
+              class="btn btn-sm btn-primary active"
+            >
+              📋 Table View
+            </button>
+            <button
+              id="viewGrid"
+              type="button"
+              data-action="view-grid"
+              class="btn btn-sm btn-ghost"
+            >
+              🗓️ Timetable Grid
+            </button>
+            <span class="badge badge-lecture" style="margin-left: auto"
+              ><span id="scheduleCount">0</span> schedules found</span
+            >
+          </div>
+        </div>
+
+        <div class="card mt-3" id="tableView">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Department</th>
+                  <th>Faculty</th>
+                  <th>Classroom</th>
+                  <th>Day</th>
+                  <th>Time</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3" id="gridView" style="display: none">
+          <div class="timetable-wrap">
+            <table class="timetable" id="timetable">
+              <thead>
+                <tr>
+                  <th class="time-col">Time</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                  <th>Saturday</th>
+                </tr>
+              </thead>
+              <tbody id="timetableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="scheduleModal">
+      <div class="modal large">
+        <div class="modal-header">
+          <h3 id="modalTitle">Add New Schedule</h3>
+          <button class="modal-close" data-action="close-schedule">✕</button>
+        </div>
+
+        <form id="scheduleForm" novalidate>
+          <input type="hidden" id="scheduleId" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedDept">Department *</label>
+              <select
+                id="schedDept"
+                class="form-control"
+                title="Select department"
+              >
+                <option value="">Select Department</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedCourse">Course *</label>
+              <select
+                id="schedCourse"
+                class="form-control"
+                title="Select course"
+              >
+                <option value="">Select Course</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedFaculty">Faculty *</label>
+              <select
+                id="schedFaculty"
+                class="form-control"
+                title="Select faculty"
+              >
+                <option value="">Select Faculty</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedRoom">Classroom *</label>
+              <select
+                id="schedRoom"
+                class="form-control"
+                title="Select classroom"
+              >
+                <option value="">Select Room</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedDay">Day *</label>
+              <select id="schedDay" class="form-control" title="Select day">
+                <option value="">Select Day</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedTime">Time Slot *</label>
+              <select
+                id="schedTime"
+                class="form-control"
+                title="Select time slot"
+              >
+                <option value="">Select Time</option>
+              </select>
+              <div class="field-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedDate">Date *</label>
+              <input
+                type="date"
+                id="schedDate"
+                class="form-control"
+                title="Select class date"
+              />
+              <div class="field-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="schedType">Type</label>
+              <select
+                id="schedType"
+                class="form-control"
+                title="Select class type"
+              >
+                <option>Lecture</option>
+                <option>Lab</option>
+                <option>Tutorial</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schedSemester">Semester</label>
+              <input
+                type="number"
+                id="schedSemester"
+                class="form-control"
+                min="1"
+                max="8"
+                value="1"
+                placeholder="1-8"
+              />
+              <div class="field-error"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="schedDivision">Division *</label>
+            <select
+              id="schedDivision"
+              class="form-control"
+              title="Select division"
+            >
+              <option value="">Select Division</option>
+              <option value="Division A">Division A</option>
+              <option value="Division B">Division B</option>
+              <option value="Division C">Division C</option>
+              <option value="Division D">Division D</option>
+              <option value="Division E">Division E</option>
+              <option value="Division F">Division F</option>
+              <option value="Division G">Division G</option>
+              <option value="Division H">Division H</option>
+              <option value="Division I">Division I</option>
+              <option value="Division J">Division J</option>
+            </select>
+            <div class="field-error"></div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-ghost"
+              data-action="close-schedule"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="saveSchedule"
+              data-action="save"
+              class="btn btn-primary"
+            >
+              💾 Save Schedule
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Empty Classroom Scanner Modal -->
+    <div class="modal-overlay" id="scannerModal">
+      <div class="modal large">
+        <div class="modal-header">
+          <div>
+            <h3 style="display: flex; align-items: center; gap: 8px">
+              📡 Real-Time Classroom Scanner & Locator
+            </h3>
+            <p
+              style="
+                font-size: 12px;
+                color: var(--text-muted);
+                margin: 2px 0 0 0;
+              "
+            >
+              Scan for available classrooms across all college wings when
+              classrooms are occupied
+            </p>
+          </div>
+          <button class="modal-close" data-action="close-scanner">✕</button>
+        </div>
+
+        <div class="modal-body" style="padding: 20px">
+          <div
+            class="scanner-filter-bar grid-4"
+            style="
+              background: var(--bg-hover);
+              padding: 16px;
+              border-radius: 12px;
+              margin-bottom: 20px;
+              border: 1px solid var(--border);
+            "
+          >
+            <div class="form-group" style="margin: 0">
+              <label for="scanDay">Select Day</label>
+              <select
+                id="scanDay"
+                class="form-control"
+                title="Select day to scan"
+              ></select>
+            </div>
+            <div class="form-group" style="margin: 0">
+              <label for="scanDate">Select Date</label>
+              <input
+                type="date"
+                id="scanDate"
+                class="form-control"
+                title="Select date to scan"
+              />
+            </div>
+            <div class="form-group" style="margin: 0">
+              <label for="scanTime">Select Time Slot</label>
+              <select
+                id="scanTime"
+                class="form-control"
+                title="Select time slot to scan"
+              ></select>
+            </div>
+            <div
+              class="form-group"
+              style="margin: 0; display: flex; align-items: flex-end"
+            >
+              <button
+                type="button"
+                id="runScanBtn"
+                class="btn btn-primary btn-block"
+                style="height: 42px"
+              >
+                🔍 Scan Available Rooms
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="scannerRadarBox"
+            class="radar-box"
+            style="
+              display: none;
+              text-align: center;
+              padding: 30px 20px;
+              background: rgba(15, 23, 42, 0.6);
+              border-radius: 14px;
+              border: 1px dashed var(--accent-light);
+              margin-bottom: 20px;
+            "
+          >
+            <div class="radar-circle">
+              <div class="radar-line"></div>
+              <div class="radar-ping p1"></div>
+              <div class="radar-ping p2"></div>
+            </div>
+            <div
+              class="radar-status-text"
+              style="
+                margin-top: 14px;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--accent-light);
+              "
+            >
+              📡 Scanning 12 Classrooms across Wings A, B, C, D & Labs...
+            </div>
+          </div>
+
+          <div id="scannerResults">
+            <!-- Results populated dynamically -->
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-ghost"
+            data-action="close-scanner"
+          >
+            Close Scanner
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/schedule.js"></script>
+  </body>
+</html>

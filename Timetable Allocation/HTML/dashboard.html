@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | College Timetable Allocation System</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">T</div>
+        <div class="brand-text">
+          <h2>Timetable System</h2>
+          <p>College Faculty</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item active"
+          ><span class="icon">📊</span> Dashboard</a
+        >
+        <a href="schedule.html" class="nav-item"
+          ><span class="icon">🗓️</span> Schedule</a
+        >
+        <a href="chat.html" class="nav-item"
+          ><span class="icon">🤖</span> AI Assistant</a
+        >
+        <a href="it-support.html" class="nav-item"
+          ><span class="icon">🛡️</span> IT Support</a
+        >
+        <div class="nav-label mt-2">Account</div>
+        <a href="index.html" class="nav-item" onclick="logoutUser()"
+          ><span class="icon">🚪</span> Logout</a
+        >
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini">
+          <div class="avatar user-avatar">U</div>
+          <div style="flex: 1">
+            <div class="u-name">User</div>
+            <div class="u-role">ROLE</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main" id="dashboardContent">
+      <header class="topbar">
+        <button class="menu-toggle">☰</button>
+        <div class="topbar-title">
+          <h1>Dashboard</h1>
+          <p id="todayDate">Loading date...</p>
+        </div>
+        <div class="topbar-actions">
+          <button
+            class="icon-btn theme-toggle"
+            title="Toggle theme"
+            aria-label="Toggle theme"
+          >
+            🌙
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="hero-banner animate-in">
+          <h2>
+            Welcome back,
+            <span id="dashboardUserName" class="welcome-user">User</span>! 👋
+          </h2>
+          <p>
+            Here's your college timetable overview. You can manage schedules by
+            department, faculty, or classroom, and use the AI assistant for
+            quick answers.
+          </p>
+        </div>
+
+        <div class="grid-4 stagger mt-3">
+          <div class="stat-card stat-purple">
+            <div class="stat-icon">📚</div>
+            <div class="stat-label">Total Schedules</div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-sub">All sessions this term</div>
+          </div>
+
+          <div class="stat-card stat-green">
+            <div class="stat-icon">👩‍🏫</div>
+            <div class="stat-label">Faculty Members</div>
+            <div class="stat-value" id="statFaculty">0</div>
+            <div class="stat-sub">Active faculty</div>
+          </div>
+
+          <div class="stat-card stat-blue">
+            <div class="stat-icon">🏫</div>
+            <div class="stat-label">Classrooms</div>
+            <div class="stat-value" id="statRooms">0</div>
+            <div class="stat-sub">Rooms in use</div>
+          </div>
+
+          <div class="stat-card stat-orange">
+            <div class="stat-icon">🏛️</div>
+            <div class="stat-label">Departments</div>
+            <div class="stat-value" id="statDepts">0</div>
+            <div class="stat-sub">Active departments</div>
+          </div>
+        </div>
+
+        <div class="card mt-3 animate-in-2">
+          <div class="card-header">
+            <div>
+              <h3>📅 Weekly Class Distribution</h3>
+              <p class="card-sub">
+                Classes scheduled per day (Monday to Saturday) — the
+                <span style="color: var(--warning); font-weight: 600"
+                  >orange bar</span
+                >
+                marks today
+              </p>
+            </div>
+            <span class="badge badge-lecture" id="statToday">Today: 0</span>
+          </div>
+          <div id="weeklySnapshot" style="display: flex; gap: 14px"></div>
+        </div>
+
+        <div class="grid-2 mt-3">
+          <div class="card animate-in-2">
+            <div class="card-header">
+              <div>
+                <h3>📌 Recently Added / Viewed Schedules</h3>
+                <p class="card-sub">
+                  Latest updated class schedules in the system
+                </p>
+              </div>
+              <a href="schedule.html" class="btn btn-sm btn-outline"
+                >View All Schedules</a
+              >
+            </div>
+            <div id="recentlyViewedList"></div>
+          </div>
+
+          <div>
+            <div class="card-header qa-header" style="margin-bottom: 14px">
+              <div>
+                <h3>⚡ Quick Actions</h3>
+                <p class="card-sub">Jump right in</p>
+              </div>
+            </div>
+            <div id="quickActions" class="grid-2 stagger"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Assistant | College Timetable Allocation System</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">T</div>
+        <div class="brand-text">
+          <h2>Timetable System</h2>
+          <p>College Faculty</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"
+          ><span class="icon">📊</span> Dashboard</a
+        >
+        <a href="schedule.html" class="nav-item"
+          ><span class="icon">🗓️</span> Schedule</a
+        >
+        <a href="chat.html" class="nav-item active"
+          ><span class="icon">🤖</span> AI Assistant</a
+        >
+        <a href="it-support.html" class="nav-item"
+          ><span class="icon">🛡️</span> IT Support</a
+        >
+        <div class="nav-label mt-2">Account</div>
+        <a href="index.html" class="nav-item" onclick="logoutUser()"
+          ><span class="icon">🚪</span> Logout</a
+        >
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini">
+          <div class="avatar user-avatar">U</div>
+          <div style="flex: 1">
+            <div class="u-name" style="font-size: 12.5px; font-weight: 600">
+              User
+            </div>
+            <div
+              class="u-role"
+              style="font-size: 10.5px; color: var(--text-muted)"
+            >
+              ROLE
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main" id="chatContent">
+      <header class="topbar">
+        <button class="menu-toggle">☰</button>
+        <div class="topbar-title">
+          <h1>AI Assistant</h1>
+          <p>Find available classrooms, check schedules & detect conflicts</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn theme-toggle" title="Toggle theme">🌙</button>
+          <button class="icon-btn logout-btn" title="Logout">🚪</button>
+        </div>
+      </header>
+
+      <div class="content" style="padding-top: 16px">
+        <div class="chat-layout">
+          <div class="chat-main">
+            <div class="chat-header">
+              <div class="chat-avatar">🤖</div>
+              <div>
+                <div class="ch-name">Timetable AI Assistant</div>
+                <div class="ch-status">Online • Ready to help</div>
+              </div>
+              <span class="badge badge-lecture" style="margin-left: auto"
+                >v1.0</span
+              >
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-suggestions">
+              <button class="chip">
+                📡 Scan empty classrooms for Monday at 10:00
+              </button>
+              <button class="chip">Which rooms are free on Tuesday?</button>
+              <button class="chip">Show me Prof. Rinku Patil schedule</button>
+              <button class="chip">Any conflicts on Wednesday?</button>
+              <button class="chip">Show BCA schedule for Friday</button>
+              <button class="chip">Help</button>
+            </div>
+
+            <form class="chat-input-bar" id="chatForm">
+              <input
+                type="text"
+                id="chatInput"
+                class="form-control"
+                placeholder="Ask about classrooms, schedules, conflicts..."
+                autocomplete="off"
+              />
+              <button type="submit" id="sendChat" class="btn btn-primary">
+                ➤
+              </button>
+            </form>
+          </div>
+
+          <div class="chat-side">
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 12px">
+                <h3 style="font-size: 14px">📊 Quick Stats</h3>
+              </div>
+              <div id="quickStats"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 12px">
+                <h3 style="font-size: 14px">🏛️ Department Load</h3>
+              </div>
+              <div id="deptList"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 8px">
+                <h3 style="font-size: 14px">💬 Try Asking</h3>
+              </div>
+              <p
+                style="
+                  font-size: 12.5px;
+                  color: var(--text-muted);
+                  line-height: 1.8;
+                "
+              >
+                • "📡 Scan empty classrooms for Monday at 10:00"<br />
+                • "Which rooms are free on Friday at 02:00-03:00?"<br />
+                • "Show me Prof. Rinku Patil schedule"<br />
+                • "Any conflicts this week?"<br />
+                • "What is today's schedule?"<br />
+                • "Show BCA schedule"<br />
+                • "Total classes in the system?"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/chat.js"></script>
+  </body>
+</html>
